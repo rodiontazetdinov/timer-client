@@ -1,0 +1,211 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "tact_TimerContract.headers.fc";
+#include "tact_TimerContract.stdlib.fc";
+#include "tact_TimerContract.constants.fc";
+#include "tact_TimerContract.storage.fc";
+
+;;
+;; Contract TimerContract functions
+;;
+
+(slice, slice, int) $TimerContract$_contract_init() impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = (null(), null(), null());
+    $self'owner = __tact_context_get_sender();
+    return ($self'owner, $self'secondAddressToPay, $self'timerStartTime);
+}
+
+((slice, slice, int), slice) $TimerContract$_fun_secondAddressToPay((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = $self;
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), __tact_not_null($self'secondAddressToPay));
+}
+
+((slice, slice, int), int) $TimerContract$_fun_balance((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = $self;
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), __tact_my_balance());
+}
+
+((slice, slice, int), int) $TimerContract$_fun_timerStartTime((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = $self;
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), __tact_not_null($self'timerStartTime));
+}
+
+((slice, slice, int), ()) $TimerContract$_fun_requireOwner((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = $self;
+    throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+((slice, slice, int), slice) $TimerContract$_fun_owner((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'secondAddressToPay, $self'timerStartTime)) = $self;
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), $self'owner);
+}
+
+;;
+;; Receivers of a Contract TimerContract
+;;
+
+(((slice, slice, int)), ()) %$TimerContract$_internal_empty((slice, slice, int) $self) impure inline {
+    var ($self'owner, $self'secondAddressToPay, $self'timerStartTime) = $self;
+    __tact_debug_str(__gen_slice_string_d4ac4197f9a7d50c59c39ad8548801590f72ffb996b0259d0db3f081129496b6(), "[DEBUG] File contracts\timer_contract.tact:18:9");
+    throw_unless(41168, (__tact_my_balance() <= 5000000000));
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+(((slice, slice, int)), ()) $TimerContract$_internal_binary_SecondAddressToPay((slice, slice, int) $self, (slice) $msg) impure inline {
+    var ($self'owner, $self'secondAddressToPay, $self'timerStartTime) = $self;
+    var ($msg'secondAddressToPay) = $msg;
+    ($self'owner, $self'secondAddressToPay, $self'timerStartTime)~$TimerContract$_fun_requireOwner();
+    $self'secondAddressToPay = $msg'secondAddressToPay;
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+((slice, slice, int), ()) $TimerContract$_internal_text_f7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846((slice, slice, int) $self) impure inline {
+    var ($self'owner, $self'secondAddressToPay, $self'timerStartTime) = $self;
+    $self'timerStartTime = now();
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+((slice, slice, int), ()) $TimerContract$_internal_text_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f((slice, slice, int) $self) impure inline {
+    var ($self'owner, $self'secondAddressToPay, $self'timerStartTime) = $self;
+    throw_unless(58790, ((now() - __tact_not_null($self'timerStartTime)) > 70));
+    $global_send($SendParameters$_constructor_to_value_mode(__tact_not_null($self'secondAddressToPay), 300000000, 1));
+    $self'timerStartTime = null();
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+(((slice, slice, int)), ()) $TimerContract$_internal_binary_Deploy((slice, slice, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'secondAddressToPay, $self'timerStartTime) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner, $self'secondAddressToPay, $self'timerStartTime)~$TimerContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'secondAddressToPay, $self'timerStartTime), ());
+}
+
+;;
+;; Get methods of a Contract TimerContract
+;;
+
+_ %secondAddressToPay() method_id(91599) {
+    var self = $TimerContract$_contract_load();
+    var res = self~$TimerContract$_fun_secondAddressToPay();
+    return res;
+}
+
+_ %balance() method_id(104128) {
+    var self = $TimerContract$_contract_load();
+    var res = self~$TimerContract$_fun_balance();
+    return res;
+}
+
+_ %timerStartTime() method_id(82048) {
+    var self = $TimerContract$_contract_load();
+    var res = self~$TimerContract$_fun_timerStartTime();
+    return res;
+}
+
+_ %owner() method_id(83229) {
+    var self = $TimerContract$_contract_load();
+    var res = self~$TimerContract$_fun_owner();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.debug.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmUtHDFmjsAxF4E1P5s3b3rgzREaXZRkSz756DtYsWAzDr";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract TimerContract
+;;
+
+((slice, slice, int), int) $TimerContract$_contract_router_internal((slice, slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive empty message
+    if ((op == 0) & (slice_bits(in_msg) <= 32)) {
+        self~%$TimerContract$_internal_empty();
+        return (self, true);
+    }
+    
+    ;; Receive SecondAddressToPay message
+    if (op == 68485749) {
+        var msg = in_msg~$SecondAddressToPay$_load();
+        self~$TimerContract$_internal_binary_SecondAddressToPay(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$TimerContract$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "start" message
+        if (text_op == 0xf7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846) {
+            self~$TimerContract$_internal_text_f7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846();
+            return (self, true);
+        }
+        
+        ;; Receive "stop" message
+        if (text_op == 0x6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f) {
+            self~$TimerContract$_internal_text_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f();
+            return (self, true);
+        }
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $TimerContract$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$TimerContract$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $TimerContract$_contract_store(self);
+}

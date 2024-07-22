@@ -1,0 +1,574 @@
+PROGRAM{
+  DECLPROC __tact_verify_address
+  DECLPROC __tact_load_address
+  DECLPROC __tact_load_address_opt
+  DECLPROC __tact_store_address
+  DECLPROC __tact_store_address_opt
+  DECLPROC __tact_my_balance
+  DECLPROC __tact_not_null
+  DECLPROC __tact_context_get
+  DECLPROC __tact_context_get_sender
+  DECLPROC __tact_store_bool
+  DECLPROC __tact_slice_eq_bits
+  DECLPROC $Deploy$_load
+  DECLPROC $DeployOk$_store
+  DECLPROC $DeployOk$_store_cell
+  DECLPROC $SecondAddressToPay$_load
+  DECLPROC $TimerContract$_store
+  DECLPROC $TimerContract$_load
+  DECLPROC $StateInit$_not_null
+  DECLPROC $TimerContract$_contract_init
+  DECLPROC $TimerContract$_contract_load
+  DECLPROC $TimerContract$_contract_store
+  DECLPROC $global_send
+  DECLPROC $TimerContract$_fun_secondAddressToPay
+  DECLPROC $TimerContract$_fun_balance
+  DECLPROC $TimerContract$_fun_timerStartTime
+  DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+  DECLPROC $TimerContract$_fun_forward
+  DECLPROC $TimerContract$_fun_notify
+  DECLPROC $TimerContract$_fun_requireOwner
+  DECLPROC $TimerContract$_fun_owner
+  DECLPROC $SendParameters$_constructor_to_value_mode
+  DECLPROC $DeployOk$_constructor_queryId
+  DECLPROC %$TimerContract$_internal_empty
+  DECLPROC $TimerContract$_internal_binary_SecondAddressToPay
+  DECLPROC $TimerContract$_internal_text_f7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846
+  DECLPROC $TimerContract$_internal_text_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f
+  DECLPROC $TimerContract$_internal_binary_Deploy
+  91599 DECLMETHOD %secondAddressToPay
+  104128 DECLMETHOD %balance
+  82048 DECLMETHOD %timerStartTime
+  83229 DECLMETHOD %owner
+  113617 DECLMETHOD supported_interfaces
+  121275 DECLMETHOD get_abi_ipfs
+  115390 DECLMETHOD lazy_deployment_completed
+  DECLPROC $TimerContract$_contract_router_internal
+  DECLPROC recv_internal
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sender
+  DECLGLOBVAR __tact_context_sys
+  DECLGLOBVAR __tact_randomized
+  __tact_verify_address PROCINLINE:<{
+    DUP
+    SBITS
+    267 PUSHINT
+    EQUAL
+    136 THROWIFNOT
+    DUP
+    11 PLDU
+    DUP
+    1279 PUSHINT
+    EQUAL
+    137 THROWIF
+    10 PUSHPOW2
+    EQUAL
+    136 THROWIFNOT
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+  }>
+  __tact_load_address_opt PROCINLINE:<{
+    DUP
+    2 PLDU
+    0 NEQINT
+    IF:<{
+      LDMSGADDR
+      SWAP
+      __tact_verify_address INLINECALLDICT
+    }>ELSE<{
+      2 PUSHINT
+      SDSKIPFIRST
+      PUSHNULL
+    }>
+  }>
+  __tact_store_address PROCINLINE:<{
+    __tact_verify_address INLINECALLDICT
+    STSLICER
+  }>
+  __tact_store_address_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      0 PUSHINT
+      SWAP
+      2 STU
+    }>ELSE<{
+      __tact_store_address INLINECALLDICT
+    }>
+  }>
+  __tact_my_balance PROCINLINE:<{
+    BALANCE
+    FIRST
+  }>
+  __tact_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+  }>
+  __tact_context_get PROCINLINE:<{
+    __tact_context GETGLOB
+    4 UNTUPLE
+  }>
+  __tact_context_get_sender PROCINLINE:<{
+    __tact_context_sender GETGLOB
+  }>
+  __tact_store_bool PROCINLINE:<{
+    SWAP
+    1 STI
+  }>
+  __tact_slice_eq_bits PROCINLINE:<{
+    SDEQ
+  }>
+  $Deploy$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2490013878 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    64 LDU
+    SWAP
+  }>
+  $DeployOk$_store PROCINLINE:<{
+    2952335191 PUSHINT
+    ROT
+    32 STU
+    64 STU
+  }>
+  $DeployOk$_store_cell PROCINLINE:<{
+    NEWC
+    SWAP
+    $DeployOk$_store INLINECALLDICT
+    ENDC
+  }>
+  $SecondAddressToPay$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    68485749 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    __tact_load_address INLINECALLDICT
+  }>
+  $TimerContract$_store PROCINLINE:<{
+    2SWAP
+    __tact_store_address INLINECALLDICT
+    ROT
+    __tact_store_address_opt INLINECALLDICT
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      SWAP
+      1 STI
+      32 STU
+    }>ELSE<{
+      FALSE
+      s2 POP
+      1 STI
+    }>
+  }>
+  $TimerContract$_load PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address_opt INLINECALLDICT
+    SWAP
+    1 LDI
+    SWAP
+    IF:<{
+      32 LDU
+    }>ELSE<{
+      PUSHNULL
+      SWAP
+    }>
+    3 -ROLL
+  }>
+  $StateInit$_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+    2 UNTUPLE
+  }>
+  $TimerContract$_contract_init PROCREF:<{
+    PUSHNULL
+    PUSHNULL
+    __tact_context_get_sender INLINECALLDICT
+    -ROT
+  }>
+  $TimerContract$_contract_load PROCREF:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    1 LDI
+    SWAP
+    IFJMP:<{
+      $TimerContract$_load INLINECALLDICT
+      1 3 BLKDROP2
+    }>
+    DROP
+    MYADDR
+    11 PLDU
+    10 PUSHPOW2
+    EQUAL
+    137 THROWIFNOT
+    $TimerContract$_contract_init INLINECALLDICT
+  }>
+  $TimerContract$_contract_store PROCINLINE:<{
+    NEWC
+    __tact_context_sys GETGLOB
+    SWAP
+    STREF
+    TRUE
+    SWAP
+    1 STI
+    3 -ROLL
+    $TimerContract$_store INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  $global_send PROCREF:<{
+    NEWC
+    1 PUSHINT
+    SWAP
+    2 STI
+    s0 s7 XCHG2
+    __tact_store_bool INLINECALLDICT
+    0 PUSHINT
+    SWAP
+    3 STI
+    s0 s5 XCHG2
+    __tact_store_address INLINECALLDICT
+    s0 s3 XCHG2
+    STGRAMS
+    0 PUSHINT
+    SWAP
+    105 STI
+    s3 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      s4 PUSH
+      ISNULL
+      NOT
+    }>
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      NEWC
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      ENDC
+      ROT
+      STREF
+    }>ELSE<{
+      s3 POP
+      s3 POP
+      SWAP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      SWAP
+      __tact_not_null INLINECALLDICT
+      SWAP
+      STREF
+    }>ELSE<{
+      NIP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    ENDC
+    SWAP
+    SENDRAWMSG
+  }>
+  $TimerContract$_fun_secondAddressToPay PROCREF:<{
+    OVER
+    __tact_not_null INLINECALLDICT
+  }>
+  $TimerContract$_fun_balance PROCREF:<{
+    __tact_my_balance INLINECALLDICT
+  }>
+  $TimerContract$_fun_timerStartTime PROCREF:<{
+    DUP
+    __tact_not_null INLINECALLDICT
+  }>
+  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
+  }>
+  $TimerContract$_fun_forward PROCREF:<{
+    PUSHNULL
+    PUSHNULL
+    s2 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      2DROP
+      $StateInit$_not_null INLINECALLDICT
+      SWAP
+    }>ELSE<{
+      s2 POP
+    }>
+    s2 s4 XCHG
+    0 PUSHINT
+    s0 s3 XCHG
+    s0 s4 XCHG
+    66 PUSHINT
+    s2 s3 XCHG2
+    $SendParameters$_constructor_bounce_to_value_mode_body_code_data INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $TimerContract$_fun_notify PROCINLINE:<{
+    __tact_context_get_sender INLINECALLDICT
+    SWAP
+    FALSE
+    PUSHNULL
+    $TimerContract$_fun_forward INLINECALLDICT
+  }>
+  $TimerContract$_fun_requireOwner PROCREF:<{
+    __tact_context_get_sender INLINECALLDICT
+    s3 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    132 THROWIFNOT
+  }>
+  $TimerContract$_fun_owner PROCREF:<{
+    s2 PUSH
+  }>
+  $SendParameters$_constructor_to_value_mode PROCINLINE:<{
+    TRUE
+    3 -ROLL
+    PUSHNULL
+    PUSHNULL
+    PUSHNULL
+  }>
+  $DeployOk$_constructor_queryId PROCINLINE:<{
+  }>
+  %$TimerContract$_internal_empty PROCINLINE:<{
+    B{b5ee9c7241010101001800002c656d707479206d657373616765207265636569766564075bad71} B>boc <s PUSHSLICE
+    x{5b44454255475d2046696c6520636f6e7472616374735c74696d65725f636f6e74726163742e746163743a31383a39} PUSHSLICE
+    STRDUMP
+    DROP
+    STRDUMP
+    DROP
+    41168 PUSHINT
+    __tact_my_balance INLINECALLDICT
+    5000000000 PUSHINT
+    LEQ
+    THROWANYIFNOT
+  }>
+  $TimerContract$_internal_binary_SecondAddressToPay PROCINLINE:<{
+    3 -ROLL
+    $TimerContract$_fun_requireOwner INLINECALLDICT
+    NIP
+    s1 s2 XCHG
+  }>
+  $TimerContract$_internal_text_f7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846 PROCINLINE:<{
+    DROP
+    NOW
+  }>
+  $TimerContract$_internal_text_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f PROCINLINE:<{
+    58790 PUSHINT
+    NOW
+    s0 s2 XCHG
+    __tact_not_null INLINECALLDICT
+    s1 s2 XCHG
+    SUB
+    70 GTINT
+    THROWANYIFNOT
+    DUP
+    __tact_not_null INLINECALLDICT
+    300000000 PUSHINT
+    1 PUSHINT
+    $SendParameters$_constructor_to_value_mode INLINECALLDICT
+    $global_send INLINECALLDICT
+    PUSHNULL
+  }>
+  $TimerContract$_internal_binary_Deploy PROCINLINE:<{
+    $DeployOk$_constructor_queryId INLINECALLDICT
+    $DeployOk$_store_cell INLINECALLDICT
+    $TimerContract$_fun_notify INLINECALLDICT
+  }>
+  %secondAddressToPay PROC:<{
+    $TimerContract$_contract_load INLINECALLDICT
+    $TimerContract$_fun_secondAddressToPay INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  %balance PROC:<{
+    $TimerContract$_contract_load INLINECALLDICT
+    $TimerContract$_fun_balance INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  %timerStartTime PROC:<{
+    $TimerContract$_contract_load INLINECALLDICT
+    $TimerContract$_fun_timerStartTime INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  %owner PROC:<{
+    $TimerContract$_contract_load INLINECALLDICT
+    $TimerContract$_fun_owner INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  supported_interfaces PROC:<{
+    123515602279859691144772641439386770278 PUSHINT
+    209801025412363888721030803524359905849 PUSHINT
+    42980537499636128163026532310500881091 PUSHINT
+    36993126140238121407019133875791708966 PUSHINT
+    209474421377847335869795010607481022628 PUSHINT
+    86142586315491086060343270784266291122 PUSHINT
+  }>
+  get_abi_ipfs PROC:<{
+    x{697066733a2f2f516d55744844466d6a7341784634453150357333623372677a524561585a526b537a3735364474597357417a4472} PUSHSLICE
+  }>
+  lazy_deployment_completed PROC:<{
+    c4 PUSH
+    CTOS
+    1 LDI
+    SWAP
+  }>
+  $TimerContract$_contract_router_internal PROCREF:<{
+    c2 SAVE
+    SAMEALTSAVE
+    SWAP
+    IFJMP:<{
+      DROP
+      TRUE
+    }>
+    0 PUSHINT
+    OVER
+    SBITS
+    31 GTINT
+    IF:<{
+      DROP
+      DUP
+      32 PLDU
+    }>
+    DUP
+    0 EQINT
+    s2 PUSH
+    SBITS
+    33 LESSINT
+    AND
+    IFJMP:<{
+      2DROP
+      %$TimerContract$_internal_empty INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    68485749 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $SecondAddressToPay$_load INLINECALLDICT
+      NIP
+      $TimerContract$_internal_binary_SecondAddressToPay INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    2490013878 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $Deploy$_load INLINECALLDICT
+      NIP
+      $TimerContract$_internal_binary_Deploy INLINECALLDICT
+      TRUE
+    }>
+    0 EQINT
+    IF:<{
+      HASHSU
+      DUP
+      111919210179525823400291446324660393598139773335579977482592692299036999129158 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        $TimerContract$_internal_text_f7700733c79dfd229df95f1e55e2d1252c382f0d3c28dcb20563845e8c2d9846 INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+      50301181231975312852205072765826299685175800908058469675892098276949494209951 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $TimerContract$_internal_text_6f3575ac1ff681c8cbc50a4cc1ca6f4687f9da770212d6df8cfe84c22d861d9f INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+    }>ELSE<{
+      DROP
+    }>
+    FALSE
+  }>
+  recv_internal PROC:<{
+    SWAP
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    NEGATE
+    SWAP
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+    s0 s4 s2 PUXCPU
+    s0 s3 XCHG
+    4 TUPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    __tact_context_sender SETGLOB
+    $TimerContract$_contract_load INLINECALLDICT
+    2 3 BLKSWAP
+    $TimerContract$_contract_router_internal INLINECALLDICT
+    130 THROWIFNOT
+    $TimerContract$_contract_store INLINECALLDICT
+  }>
+}END>c
